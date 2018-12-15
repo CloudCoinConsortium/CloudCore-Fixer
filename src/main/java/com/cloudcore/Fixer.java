@@ -19,6 +19,7 @@ public class Fixer {
         File dirCommand = new File(CommandPath);
         File dirLog = new File(LogPath);
 
+        FileSystem.createDirectories();
 
         // Create Command and Log folders if they dont exist.
 
@@ -30,7 +31,6 @@ public class Fixer {
             dirLog.mkdirs();
         }
         FileSystem.createDirectories();
-        SimpleLogger.writeLog("ServantEchoerStarted", "");
         System.out.println("FrackFixer Started");
 
         //echoer.Echo(FileSystem.BasePath);

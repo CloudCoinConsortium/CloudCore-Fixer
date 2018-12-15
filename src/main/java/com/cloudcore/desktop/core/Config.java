@@ -21,6 +21,9 @@ public class Config {
     public static final String TAG_COMMAND = "Command";
     public static final String TAG_ECHOER = "Echoer";
 
+    public static int passCount = 16;
+    public static int milliSecondsToTimeOut = 5000;
+    public static int multiDetectLoad = 200;
 
     /* Fields */
 

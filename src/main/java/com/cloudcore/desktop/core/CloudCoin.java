@@ -66,4 +66,8 @@ public class CloudCoin {
     public String getFolder() { return folder; }
 
     public void setFolder(String folder) { this.folder = folder; }
+
+    public void setEd(String ed) { this.ed = ed; }
+    public void setPown(String pown) { this.pown = pown; }
+
 }

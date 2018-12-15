@@ -206,5 +206,48 @@ public class Node {
         return fixResponse;
     }
 
+    /**
+     * Returns an ticket from a trusted server
+     *
+     * @param nn  int that is the coin's Network Number
+     * @param sn  int that is the coin's Serial Number
+     * @param an String that is the coin's Authenticity Number (GUID)
+     * @param d int that is the Denomination of the Coin
+     * @return Response Object.
+     */
+    public CompletableFuture<Response> getTicket(int nn, int sn, String an, int d) {
+        return CompletableFuture.supplyAsync(() -> {
+            Response get_ticketResponse = new Response();
+            get_ticketResponse.fullRequest = fullUrl + "get_ticket?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + an + "&denomination=" + d;
+            long before = System.currentTimeMillis();
+
+            try {
+                get_ticketResponse.fullResponse = Utils.getHtmlFromURL(get_ticketResponse.fullRequest);
+                long after = System.currentTimeMillis();
+                long ts = after - before;
+                get_ticketResponse.milliseconds = (int) ts;
+
+                TicketResponse response = Utils.createGson().fromJson(get_ticketResponse.fullResponse, TicketResponse.class);
+
+                if (get_ticketResponse.fullResponse.contains("ticket")) {
+                    ticket = get_ticketResponse.outcome = response.message;
+                    get_ticketResponse.success = true;
+                    hasTicket = true;
+                } else {
+                    get_ticketResponse.success = false;
+                    hasTicket = false;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                get_ticketResponse.outcome = "error";
+                get_ticketResponse.fullResponse = e.getMessage();
+                get_ticketResponse.success = false;
+                hasTicket = false;
+            }
+            return get_ticketResponse;
+        });
+    }
+
 }
 

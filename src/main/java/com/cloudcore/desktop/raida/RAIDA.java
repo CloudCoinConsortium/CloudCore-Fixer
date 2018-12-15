@@ -68,6 +68,30 @@ public class RAIDA {
         }
     }
 
+    public void getTickets(int[] triad, String[] ans, int nn, int sn, int denomination, int milliSecondsToTimeOut) {
+        CompletableFuture task = getTicket(0, triad[0], nn, sn, ans[0], denomination);
+        CompletableFuture task2 = getTicket(1, triad[1], nn, sn, ans[1], denomination);
+        CompletableFuture task3 = getTicket(2, triad[2], nn, sn, ans[2], denomination);
+        CompletableFuture[] taskList = new CompletableFuture[]{task, task2, task3};
+
+        try {
+            CompletableFuture.allOf(taskList).get(milliSecondsToTimeOut, TimeUnit.MILLISECONDS);
+        } catch (TimeoutException | InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public CompletableFuture getTicket(int i, int raidaID, int nn, int sn, String an, int d) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                responseArray[raidaID] = nodes[raidaID].getTicket(nn, sn, an, d).get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
     public static RAIDA getInstance(Network network) {
         return new RAIDA(network);
     }
