@@ -13,6 +13,7 @@ import com.cloudcore.desktop.utils.FileUtils;
 import com.cloudcore.desktop.utils.SimpleLogger;
 import com.google.gson.Gson;
 
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -30,7 +31,7 @@ public class FrackFixer {
     /* Fields */
 
     public static SimpleLogger logger;
-
+    public String RootPath = FileSystem.RootPath;
     private RAIDA raida;
 
     public boolean continueExecution = true;
@@ -39,11 +40,33 @@ public class FrackFixer {
 
     /* Constructors */
 
-    public FrackFixer() {
+    public FrackFixer(String path) {
+        RootPath = path;
+        System.out.println(path);
         raida = RAIDA.getInstance();
     }
 
 
+    public void multiFix() {
+        final File folder = new File(FileSystem.FrackedFolder);
+        int i=0;
+        ArrayList<CloudCoin> folderCoins = new ArrayList<CloudCoin>();
+
+        for (final File fileEntry : folder.listFiles()) {
+            if (!fileEntry.isDirectory()) {
+                System.out.println(fileEntry.getName());
+                ArrayList<CloudCoin> fileCoins =  FileUtils.loadCloudCoinsFromStack(FileSystem.FrackedFolder , fileEntry.getName());
+                i++;
+                for (CloudCoin coin:fileCoins
+                     ) {
+                    folderCoins.add(coin);
+                }
+               // folderCoins.add(fileCoins);
+            }
+        }
+        System.out.println("Total files parsed: " + i+ " CloudCoins Loaded: " + folderCoins.size());
+
+    }
     /* Methods */
 
     public boolean fixOneGuidCorner(int raida_ID, CloudCoin cc, int corner, int[] triad) {

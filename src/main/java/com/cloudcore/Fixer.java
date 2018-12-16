@@ -32,6 +32,8 @@ public class Fixer {
         }
         FileSystem.createDirectories();
         System.out.println("FrackFixer Started");
+        FrackFixer fixer = new FrackFixer(FileSystem.BasePath);
+        fixer.multiFix();
 
         //echoer.Echo(FileSystem.BasePath);
     }
