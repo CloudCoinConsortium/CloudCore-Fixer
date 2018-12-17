@@ -64,6 +64,14 @@ public class FrackFixer {
                // folderCoins.add(fileCoins);
             }
         }
+
+        ArrayList<CloudCoin> frackCoinsAtPosition= Utils.GetFrackedCoins(folderCoins,1);
+        System.out.println("Fracked Coins at position " + 0 + "- " + frackCoinsAtPosition.size());
+
+        for(int j=0; j < 25; j++) {
+      //      ArrayList<CloudCoin> frackCoinsAtPosition= Utils.GetFrackedCoins(folderCoins,j);
+       //     System.out.println("Fracked Coins at position " + j + "- " + frackCoinsAtPosition.size());
+        }
         System.out.println("Total files parsed: " + i+ " CloudCoins Loaded: " + folderCoins.size());
 
     }

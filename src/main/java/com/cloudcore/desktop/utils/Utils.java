@@ -1,5 +1,6 @@
 package com.cloudcore.desktop.utils;
 
+import com.cloudcore.desktop.core.CloudCoin;
 import com.cloudcore.desktop.core.Config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,6 +10,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.net.URL;
 import java.io.*;
@@ -106,6 +108,19 @@ public class Utils {
         return String.format("%" + length + "s", string).replace(' ', padding);
     }
 
+    public static ArrayList<CloudCoin> GetFrackedCoins(ArrayList<CloudCoin> coins,int position) {
+        ArrayList<CloudCoin> filteredCoins = new ArrayList<CloudCoin>();
+
+        for (CloudCoin coin: coins
+             ) {
+            if(coin.getPown().substring(position,position+1).equalsIgnoreCase("f"))
+                filteredCoins.add(coin);
+            System.out.println(coin.getPown().substring(position,position+1));
+
+        }
+
+        return  filteredCoins;
+    }
     public static int parseInt(String value) {
         if (value == null || value.length() == 0) return -1;
 
